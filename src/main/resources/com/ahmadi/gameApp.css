@@ -1,0 +1,54 @@
+.cost_button {
+    -fx-background-color:
+            #3c7fb1,
+            linear-gradient(#fafdfe, #e8f5fc),
+            linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
+
+}
+
+.reset_btn {
+    -fx-background-color:
+            #b13c3c,
+            linear-gradient(#fefafa, #fce8e8),
+            linear-gradient(#fdeaea 0%, #fcd9d9 49%, #fdbebe 50%, #f5a7a7 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
+
+}
+
+.reset_btn:hover{
+    -fx-background-color:  #b13c3c,
+    linear-gradient(#fefafa, #fce8e8),
+    linear-gradient(#f5a7a7 0%, #fcd9d9 49%, #fdbebe 50%, #fdeaea 100%);
+    -fx-text-fill: rgb(31, 70, 0);
+}
+
+
+
+.cost_button:hover{
+    -fx-background-color:  #3c7fb1,
+    linear-gradient(#fafdfe, #e8f5fc),
+    linear-gradient(#a7d9f5  0%, #d9f0fc 49%, #bee6fd 50%, #eaf6fd 100%);
+    -fx-text-fill: rgb(31, 70, 0);
+}
+.cost_button:selected{
+    -fx-background-color:  #65b13c,
+    linear-gradient(#fbfefa, #eafce8),
+    linear-gradient(#b0f5a7 0%, #d9fcda 49%, #c6fdbe 50%, #ecfdea 100%);
+    -fx-text-fill: black;
+}
+
+.cost_button:pressed{
+    -fx-background-color:  #4f3cb1,
+    linear-gradient(#fbfafe, #ebe8fc),
+    linear-gradient(#b1a7f5 0%, #ded9fc 49%, #cebefd 50%, #edeafd 100%);
+    -fx-text-fill: black;
+}
