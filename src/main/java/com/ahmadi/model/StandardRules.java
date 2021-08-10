@@ -1,31 +1,23 @@
 package com.ahmadi.model;
 
-import com.ahmadi.SharedVariable;
-import com.ahmadi.interfaces.Board;
-import com.ahmadi.interfaces.RuleSets;
+import com.ahmadi.states.CellState;
+import com.ahmadi.utils.SharedVariable;
+import com.ahmadi.model.abstracts.Board;
+import com.ahmadi.model.interfaces.RuleSets;
 
 public class StandardRules implements RuleSets {
 	
 	@Override
 	public int countNeighbors(CellState[][] locBoard, int x, int y) {
 		int neighbors = 0;
-		
-		
-		
 		int col , row ;
-		
-		System.out.println("width: " +SharedVariable.BORD_WIDTH);
-		System.out.println( "height: " + SharedVariable.BORD_HEIGHT);
-		
-		
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2 ; j++) {
 				
-				col = (x + i + SharedVariable.BORD_HEIGHT.getValue()) % SharedVariable.BORD_HEIGHT.getValue();
-				row = (y + j + SharedVariable.BORD_WIDTH.getValue()) % SharedVariable.BORD_WIDTH.getValue();
-				System.out.println(col);
-				System.out.println(row);
-				if(locBoard[col][row] == CellState.ALIVE)
+				col = (y + i + SharedVariable.BORD_HEIGHT) % SharedVariable.BORD_HEIGHT;
+				row = (x + j + SharedVariable.BORD_WIDTH) % SharedVariable.BORD_WIDTH;
+				
+				if(locBoard[row][col] == CellState.ALIVE)
 					neighbors +=1;
 			}
 		}

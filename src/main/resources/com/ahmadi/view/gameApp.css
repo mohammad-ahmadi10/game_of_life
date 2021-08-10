@@ -39,7 +39,7 @@
     linear-gradient(#a7d9f5  0%, #d9f0fc 49%, #bee6fd 50%, #eaf6fd 100%);
     -fx-text-fill: rgb(31, 70, 0);
 }
-.cost_button:selected{
+.pause_Button{
     -fx-background-color:  #65b13c,
     linear-gradient(#fbfefa, #eafce8),
     linear-gradient(#b0f5a7 0%, #d9fcda 49%, #c6fdbe 50%, #ecfdea 100%);

@@ -1,8 +1,9 @@
-package com.ahmadi;
+package com.ahmadi.view;
 
-import com.ahmadi.model.CellState;
-import com.ahmadi.viewModels.ApplicationState;
-import javafx.geometry.Point2D;
+import com.ahmadi.states.ApplicationState;
+import com.ahmadi.states.CellState;
+import com.ahmadi.utils.CursorPosition;
+import com.ahmadi.viewModels.InfoBarViewModel;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -15,10 +16,14 @@ public class InfoBar extends AnchorPane {
 	
 	
 	
-	public InfoBar() {
+	public InfoBar(InfoBarViewModel infoBarViewModel) {
 		String cursorPattern = String.format("Cursor Position: (%d, %d)" , 0 , 0);
 		String appStatePattern = String.format("App mode: %s" , ApplicationState.EDITING.toString().toLowerCase());
 		String drawStatePattern = "Draw mode: draw";
+		
+		infoBarViewModel.getCursorProperty().subscribe(this::setCursorPosToLbl);
+		infoBarViewModel.getCellProperty().subscribe(this::setDrawMode);
+		infoBarViewModel.getAppState().subscribe(this::setAppMode);
 		
 		cursorLbl = new Label(cursorPattern);
 		modeLbl = new Label(appStatePattern);
@@ -40,9 +45,9 @@ public class InfoBar extends AnchorPane {
 		this.setWidth(Double.MAX_VALUE);
 	}
 	
-	public void setCursorPosToLbl(Point2D posis){
-		int cursorX = (int) posis.getX();
-		int cursorY = (int) posis.getY();
+	public void setCursorPosToLbl(CursorPosition posis){
+		int cursorX = posis.getX();
+		int cursorY = posis.getY();
 		
 		String formattedString = String.format("Cursor Position: (%d, %d)" , cursorX , cursorY);
 		cursorLbl.setText(formattedString);
@@ -65,5 +70,6 @@ public class InfoBar extends AnchorPane {
 		AnchorPane.setLeftAnchor(node , left);
 		AnchorPane.setRightAnchor(node , right);
 	}
+	
 	
 }

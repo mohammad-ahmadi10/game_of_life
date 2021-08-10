@@ -1,6 +1,6 @@
 package com.ahmadi.model;
 
-import com.ahmadi.interfaces.Board;
+import com.ahmadi.model.abstracts.Board;
 
 public class StandardBoard extends Board {
 	
@@ -8,5 +8,8 @@ public class StandardBoard extends Board {
 		super(width, height , boardName);
 	}
 	
+	public StandardBoard(int width, int height) {
+		super(width, height , "initialBoard");
+	}
 	
 }

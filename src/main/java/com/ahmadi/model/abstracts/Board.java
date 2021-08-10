@@ -1,6 +1,6 @@
-package com.ahmadi.interfaces;
+package com.ahmadi.model.abstracts;
 
-import com.ahmadi.model.CellState;
+import com.ahmadi.states.CellState;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Board {
@@ -52,8 +52,8 @@ public abstract class Board {
 	
 	public boolean isGridEmpty(){
 		int countDeadCell = 0;
-		for (int i = 0; i < height.getValue(); i++) {
-			for (int j = 0; j < width.getValue(); j++) {
+		for (int i = 0; i < width.getValue() - 1; i++) {
+			for (int j = 0; j < height.getValue() - 1; j++) {
 				if(grid[i][j] == CellState.DEAD)
 					countDeadCell++;
 			}
@@ -78,17 +78,19 @@ public abstract class Board {
 	}
 	
 	public static void  copyBoard(Board mainBoard , Board prevBoard) {
-		for (int i = 0; i < mainBoard.grid.length; i++) {
-			System.arraycopy(mainBoard.grid[i], 0, prevBoard.grid[i], 0, mainBoard.grid.length);
+		
+
+		for (int i = 0; i < mainBoard.width.getValue() - 1; i++) {
+			System.arraycopy(mainBoard.grid[i], 0, prevBoard.grid[i], 0, mainBoard.height.getValue() - 1);
 		}
 	}
 	
 	
 	
 	public void printBoard(){
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-				System.out.println(" ( " + i + " , " + j + " ): " + grid[j][i]);
+		for (int i = 0; i < width.getValue() -1; i++) {
+			for (int j = 0; j < height.getValue() -1; j++) {
+				System.out.println(" ( " + i + " , " + j + " ): " + grid[i][j]);
 			}
 		}
 	}

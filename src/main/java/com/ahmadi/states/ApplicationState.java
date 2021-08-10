@@ -1,4 +1,4 @@
-package com.ahmadi.viewModels;
+package com.ahmadi.states;
 
 public enum ApplicationState {
 	EDITING, SIMULATING

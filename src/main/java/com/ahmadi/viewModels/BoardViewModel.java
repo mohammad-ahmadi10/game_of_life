@@ -1,46 +1,51 @@
 package com.ahmadi.viewModels;
 
-import com.ahmadi.interfaces.Board;
-
-import java.util.LinkedList;
-import java.util.List;
+import com.ahmadi.logic.Editor;
+import com.ahmadi.logic.Simulator;
+import com.ahmadi.model.abstracts.Board;
+import com.ahmadi.states.SimulationState;
+import com.ahmadi.utils.Property;
 
 
 public class BoardViewModel {
 	
-	private Board simBoard;
-	private final List<StateListener<Board>> boardStateListener;
+	private final Property<Board> boardProperty;
+	private final Editor editor;
+	private final Simulator simulator;
 	
-	
-	
-	public BoardViewModel() {
-		this.boardStateListener = new LinkedList<>();
+	public BoardViewModel(Editor editor, Simulator simulator) {
+		this.editor = editor;
+		this.simulator = simulator;
+		this.boardProperty = new Property<>();
 	}
 	
-	public void addListener(StateListener<Board> listener){
-		boardStateListener.add(listener);
+	public Property<Board> getBoardProperty() {
+		return boardProperty;
 	}
 	
-	public void setBoard(Board newBoard) {
 	
-		this.simBoard = newBoard;
-		notifyAllListener();
-	}
-	
-	private void notifyAllListener() {
-		boardStateListener.forEach(listener -> {
-			try {
-				listener.handle(this.simBoard);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	public void handleSimState(SimulationState simulationState) {
+		
+		switch (simulationState){
+			case STOP:{
+				editor.getEditBoardProperty().setValue(editor.getEditBoardProperty().getValue());
+				editor.getEditBoardProperty().getValue().resetCellState(editor.getEditBoardProperty().getValue().getGrid());
+				simulator.getSimBoardProperty().setValue(editor.getEditBoardProperty().getValue());
 			}
-		});
+			break;
+			
+			case STEP:
+				editor.getEditBoardProperty().setValue(simulator.getSimBoardProperty().getValue());
+				simulator.getSimulation().setBoard(simulator.getSimBoardProperty().getValue());
+				break;
+			case START:
+				simulator.getSimulation().setBoard(simulator.getSimBoardProperty().getValue());
+				break;
+		}
+		
+		
+		
+		
+		
 	}
-	
-	public Board getSimBoard() {
-		return simBoard;
-	}
-	
-	
-	
 }
