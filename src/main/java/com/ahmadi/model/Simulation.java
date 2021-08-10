@@ -1,14 +1,17 @@
 package com.ahmadi.model;
 
+import com.ahmadi.command.CommandExecutor;
+import com.ahmadi.command.SimulationCommand;
+import com.ahmadi.events.ApplicationEvent;
+import com.ahmadi.events.EventSimulator;
 import com.ahmadi.model.abstracts.Board;
 import com.ahmadi.model.interfaces.RuleSets;
 import com.ahmadi.states.ApplicationState;
 import com.ahmadi.states.CellState;
 import com.ahmadi.states.SimulationState;
-import com.ahmadi.utils.Property;
+import com.ahmadi.states.SimulatorState;
+import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.eventbus.Eventbus;
-import com.ahmadi.events.ApplicationEvent;
-import com.ahmadi.events.EventSimulator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -19,20 +22,19 @@ public class Simulation {
 	private final Timeline timeline_forward = new Timeline();
 	private Board simBoard;
 	private final Eventbus eventbus;
+	private SimulationState state;
+	private CommandExecutor executor;
 	private final RuleSets rules;
-	private final Property<Board> simProperty;
-	
-	
-	public Property<Board> getSimProperty() {
-		return simProperty;
-	}
 	
 	
 	
-	public Simulation(RuleSets rules, Eventbus eventbus) {
+	
+	
+	public Simulation(RuleSets rules, Eventbus eventbus , SimulationState state , CommandExecutor executor) {
 		this.rules = rules;
 		this.eventbus = eventbus;
-		this.simProperty = new Property<>();
+		this.state = state;
+		this.executor = executor;
 		
 		KeyFrame keyFrame_forward = new KeyFrame(Duration.millis(50), event -> handleNextstep());
 		timeline_forward.getKeyFrames().add(keyFrame_forward);
@@ -40,7 +42,7 @@ public class Simulation {
 	}
 	
 	
-	public void handleNewSimState(SimulationState state) {
+	public void handleNewSimState(SimulatorState state) {
 		switch (state){
 			case START:
 				eventbus.emitEvent(new ApplicationEvent(ApplicationState.SIMULATING));
@@ -68,14 +70,18 @@ public class Simulation {
 	private void handleNextstep(){
 		nextStep();
 		
-		if(this.getBoard().isSameBoard(simProperty.getValue())){
-			eventbus.emitEvent(new EventSimulator(SimulationState.STOP));
+		if(this.getBoard().isSameBoard(state.getBoardPro().getValue())){
+			eventbus.emitEvent(new EventSimulator(SimulatorState.STOP));
 		}
 		
 		
 		if(this.getBoard() != null)
-			simProperty.setValue(this.getBoard());
-			//simulationViewModel.getSimBoardProperty().setValue(this.getBoard());
+		{
+			SimulationCommand command = state ->{
+				state.getBoardPro().setValue(this.simBoard);
+			};
+			executor.execute(command);
+		}
 	}
 	
 	
@@ -87,7 +93,7 @@ public class Simulation {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
 				CellState nextState = rules.calcNextGen( i, j ,this.simBoard );
-				board.setState(i , j , nextState);
+				board.setState(new CursorPosition(i , j), nextState);
 			}
 		}
 		this.simBoard = board;
@@ -100,6 +106,12 @@ public class Simulation {
 	
 	public void setBoard(Board board) {
 		this.simBoard = board;
-		simProperty.setValue(this.simBoard);
+		
+		SimulationCommand command = state -> {
+			state.getBoardPro().setValue(this.simBoard);
+		};
+		executor.execute(command);
+		
 	}
+	
 }

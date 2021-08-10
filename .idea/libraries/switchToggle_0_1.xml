@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="switchToggle-0.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../components/swtichToggle/target/switchToggle-0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../fx_folder/components/swtichToggle/target/switchToggle-0.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

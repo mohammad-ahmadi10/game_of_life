@@ -4,6 +4,7 @@ import com.ahmadi.logic.Editor;
 import com.ahmadi.logic.Simulator;
 import com.ahmadi.model.abstracts.Board;
 import com.ahmadi.states.SimulationState;
+import com.ahmadi.states.SimulatorState;
 import com.ahmadi.utils.Property;
 
 
@@ -24,18 +25,18 @@ public class BoardViewModel {
 	}
 	
 	
-	public void handleSimState(SimulationState simulationState) {
+	public void handleSimState(SimulatorState simulationState) {
 		
 		switch (simulationState){
 			case STOP:{
-				editor.getEditBoardProperty().setValue(editor.getEditBoardProperty().getValue());
-				editor.getEditBoardProperty().getValue().resetCellState(editor.getEditBoardProperty().getValue().getGrid());
-				simulator.getSimBoardProperty().setValue(editor.getEditBoardProperty().getValue());
+				editor.getEditorState().getEditBoardProperty().setValue(editor.getEditorState().getEditBoardProperty().getValue());
+				editor.getEditorState().getEditBoardProperty().getValue().resetCellState(editor.getEditorState().getEditBoardProperty().getValue().getGrid());
+				simulator.getSimBoardProperty().setValue(editor.getEditorState().getEditBoardProperty().getValue());
 			}
 			break;
 			
 			case STEP:
-				editor.getEditBoardProperty().setValue(simulator.getSimBoardProperty().getValue());
+				editor.getEditorState().getEditBoardProperty().setValue(simulator.getSimBoardProperty().getValue());
 				simulator.getSimulation().setBoard(simulator.getSimBoardProperty().getValue());
 				break;
 			case START:

@@ -4,6 +4,7 @@ import com.ahmadi.events.EventSimulator;
 import com.ahmadi.model.Simulation;
 import com.ahmadi.model.abstracts.Board;
 import com.ahmadi.states.SimulationState;
+import com.ahmadi.states.SimulatorState;
 import com.ahmadi.utils.Property;
 import com.ahmadi.utils.eventbus.Event;
 
@@ -11,15 +12,16 @@ public class Simulator {
 	
 	// properties
 	private final Property<Board> simBoardProperty;
-	private final Property<SimulationState> simStateProperty;
+	private final Property<SimulatorState> simStateProperty;
 	private final Simulation simulation;
+	
 	
 	
 	// Getters
 	public Property<Board> getSimBoardProperty() {
 		return simBoardProperty;
 	}
-	public Property<SimulationState> getSimStateProperty() {
+	public Property<SimulatorState> getSimStateProperty() {
 		return simStateProperty;
 	}
 	// Constructor

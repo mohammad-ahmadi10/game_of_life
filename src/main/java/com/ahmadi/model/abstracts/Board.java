@@ -1,6 +1,7 @@
 package com.ahmadi.model.abstracts;
 
 import com.ahmadi.states.CellState;
+import com.ahmadi.utils.CursorPosition;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Board {
@@ -71,7 +72,10 @@ public abstract class Board {
 		}
 	}
 	
-	public void setState(int x, int y, CellState state){
+	public void setState(CursorPosition pos , CellState state){
+		int x = pos.getX();
+		int y = pos.getY();
+		
 		if( (x >= 0 && x <= this.getWidth() -1 ) &&
 			(y >= 0 && y <= this.getHeight() -1) )
 		grid[x][y] = state;
