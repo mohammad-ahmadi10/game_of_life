@@ -1,14 +1,14 @@
 package com.ahmadi.command;
 
 
-import com.ahmadi.states.EditorState;
+import com.ahmadi.states.EditorComponentState;
 
-public interface EditorCommand extends Command<EditorState>{
+public interface EditorCommand extends Command<EditorComponentState>{
 	@Override
-	void execute(EditorState state);
+	void execute(EditorComponentState state);
 	
 	@Override
-	default Class<EditorState> getStateClass() {
-		return EditorState.class;
+	default Class<EditorComponentState> getStateClass() {
+		return EditorComponentState.class;
 	}
 }

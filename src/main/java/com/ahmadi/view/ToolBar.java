@@ -2,8 +2,7 @@ package com.ahmadi.view;
 
 import com.ahmadi.components.ToggleButton;
 import com.ahmadi.states.CellState;
-import com.ahmadi.states.SimulationState;
-import com.ahmadi.states.SimulatorState;
+import com.ahmadi.states.SimulatorEventType;
 import com.ahmadi.utils.eventbus.Event;
 import com.ahmadi.utils.eventbus.Eventbus;
 import com.ahmadi.events.CellStateEvent;
@@ -96,7 +95,7 @@ public class ToolBar extends VBox {
 	private void handlePause() {
 		imageView.setImage(playImg);
 		play.setGraphic(imageView);
-		eventbus.emitEvent(new EventSimulator(SimulatorState.PAUSE));
+		eventbus.emitEvent(new EventSimulator(SimulatorEventType.PAUSE));
 	}
 	
 	
@@ -113,7 +112,7 @@ public class ToolBar extends VBox {
 		imageView.setImage(pauseImg);
 		play.setGraphic(imageView);
 		
-		eventbus.emitEvent(new EventSimulator(SimulatorState.START));
+		eventbus.emitEvent(new EventSimulator(SimulatorEventType.START));
 	}
 	
 	private void handleNextStep(ActionEvent event) {
@@ -122,7 +121,7 @@ public class ToolBar extends VBox {
 		play.setGraphic(imageView);
 		play.setSelected(false);
 		
-		eventbus.emitEvent(new EventSimulator(SimulatorState.STEP));
+		eventbus.emitEvent(new EventSimulator(SimulatorEventType.STEP));
 	}
 	
 	
@@ -132,7 +131,7 @@ public class ToolBar extends VBox {
 		play.setGraphic(imageView);
 		play.setSelected(false);
 		
-		eventbus.emitEvent(new EventSimulator(SimulatorState.STOP));
+		eventbus.emitEvent(new EventSimulator(SimulatorEventType.STOP));
 	}
 	
 	

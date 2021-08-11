@@ -1,5 +1,5 @@
 package com.ahmadi.states;
 
-public enum EditorMouseState {
+public enum EditorMouseEventType {
 	MOVE,PRESSED, DRAGGED, EXIT, ENTERED, CLICK
 }

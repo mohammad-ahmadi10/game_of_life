@@ -1,5 +1,5 @@
 package com.ahmadi.states;
 
-public enum SimulatorState {
+public enum SimulatorEventType {
 	START,  PAUSE, STEP, STOP
 }

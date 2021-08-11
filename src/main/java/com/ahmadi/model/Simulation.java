@@ -8,8 +8,8 @@ import com.ahmadi.model.abstracts.Board;
 import com.ahmadi.model.interfaces.RuleSets;
 import com.ahmadi.states.ApplicationState;
 import com.ahmadi.states.CellState;
-import com.ahmadi.states.SimulationState;
-import com.ahmadi.states.SimulatorState;
+import com.ahmadi.states.SimulationComponentState;
+import com.ahmadi.states.SimulatorEventType;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.eventbus.Eventbus;
 import javafx.animation.KeyFrame;
@@ -22,7 +22,7 @@ public class Simulation {
 	private final Timeline timeline_forward = new Timeline();
 	private Board simBoard;
 	private final Eventbus eventbus;
-	private SimulationState state;
+	private SimulationComponentState state;
 	private CommandExecutor executor;
 	private final RuleSets rules;
 	
@@ -30,7 +30,7 @@ public class Simulation {
 	
 	
 	
-	public Simulation(RuleSets rules, Eventbus eventbus , SimulationState state , CommandExecutor executor) {
+	public Simulation(RuleSets rules, Eventbus eventbus , SimulationComponentState state , CommandExecutor executor) {
 		this.rules = rules;
 		this.eventbus = eventbus;
 		this.state = state;
@@ -42,7 +42,7 @@ public class Simulation {
 	}
 	
 	
-	public void handleNewSimState(SimulatorState state) {
+	public void handleNewSimState(SimulatorEventType state) {
 		switch (state){
 			case START:
 				eventbus.emitEvent(new ApplicationEvent(ApplicationState.SIMULATING));
@@ -71,7 +71,7 @@ public class Simulation {
 		nextStep();
 		
 		if(this.getBoard().isSameBoard(state.getBoardPro().getValue())){
-			eventbus.emitEvent(new EventSimulator(SimulatorState.STOP));
+			eventbus.emitEvent(new EventSimulator(SimulatorEventType.STOP));
 		}
 		
 		

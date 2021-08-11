@@ -1,32 +1,24 @@
 package com.ahmadi.view;
 
-import com.ahmadi.states.EditorMouseState;
+import com.ahmadi.states.CanvasComponentState;
+import com.ahmadi.states.EditorMouseEventType;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.SharedVariable;
 import com.ahmadi.utils.eventbus.Eventbus;
-import com.ahmadi.events.EditorMouseEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Affine;
 
 public class Canvas extends javafx.scene.canvas.Canvas {
 	private final Affine affTrans;
 	
-	private boolean isMouseOutOfCanvas = true;
+	private final CanvasComponentState state;
 	private final Eventbus eventbus;
-	private boolean isEditing = true;
-	private CursorPosition cursorPosition;
 	
-	public CursorPosition getCursorPosition() {
-		return cursorPosition;
-	}
 	
-	public void setEditing(boolean editing) {
-		isEditing = editing;
-	}
-	
-	public Canvas(Eventbus eventbus) {
+	public Canvas(Eventbus eventbus , CanvasComponentState state) {
 		super(SharedVariable.CANVAS_WIDTH , SharedVariable.CANVAS_HEIGHT);
 		this.eventbus = eventbus;
+		this.state = state;
 		affTrans = new Affine();
 		affTrans.appendScale(Math.round((float) SharedVariable.CANVAS_WIDTH /  SharedVariable.BORD_WIDTH) ,
 				Math.round((float) SharedVariable.CANVAS_HEIGHT / SharedVariable.BORD_HEIGHT));
@@ -47,17 +39,18 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 	
 	// Events
 	public void handleMouseEntered(MouseEvent event) {
-		isMouseOutOfCanvas = false;
+		state.getIsMouseOutOfCanvas().setValue(false);
 	}
 	
 	public void handleMouseExit(MouseEvent event) {
-		isMouseOutOfCanvas = true;
-		eventbus.emitEvent(new EditorMouseEvent(new CursorPosition(0 , 0), EditorMouseState.EXIT));
+		state.getIsMouseOutOfCanvas().setValue(true);
+		eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(new CursorPosition(0 , 0), EditorMouseEventType.EXIT));
 	}
 	
 	public void handleDragged(MouseEvent event) {
 		CursorPosition pos = handleMouseEvent(event);
-		eventbus.emitEvent(new EditorMouseEvent(pos, EditorMouseState.DRAGGED));
+		state.getCursorPositionProperty().setValue(pos);
+		eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(pos, EditorMouseEventType.DRAGGED));
 	}
 	
 	
@@ -67,9 +60,9 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 		
 		int cursorX = climb(x, SharedVariable.BORD_WIDTH);
 		int cursorY = climb(y, SharedVariable.BORD_HEIGHT);
-		cursorPosition = new CursorPosition(cursorX , cursorY);
+		CursorPosition cursorPosition = new CursorPosition(cursorX, cursorY);
 		
-		if(isEditing){
+		if(state.getIsEditing().getValue()){
 			if(cursorX != -1 && cursorY != -1)
 				return cursorPosition;
 		}
@@ -87,7 +80,8 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 	
 	public void handleMouseMoved(MouseEvent event) {
 		CursorPosition pos = handleMouseEvent(event);
-		eventbus.emitEvent(new EditorMouseEvent(pos, EditorMouseState.MOVE));
+		state.getCursorPositionProperty().setValue(pos);
+		eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(pos, EditorMouseEventType.MOVE));
 	}
 	
 	
@@ -98,18 +92,10 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 		int y = (int) (Math.ceil(event.getY()/ SharedVariable.RESOLUTION)) -1 ;
 		
 		
-		if(isEditing){
-			eventbus.emitEvent(new EditorMouseEvent(new CursorPosition(x , y), EditorMouseState.CLICK));
+		if(state.getIsEditing().getValue()){
+			state.getCursorPositionProperty().setValue(new CursorPosition(x, y));
+			eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(new CursorPosition(x , y), EditorMouseEventType.CLICK));
 		}
-	}
-	
-	
-	public boolean isMouseOutOfCanvas() {
-		return isMouseOutOfCanvas;
-	}
-	
-	public boolean isEditing() {
-		return isEditing;
 	}
 	
 }

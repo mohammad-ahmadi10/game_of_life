@@ -1,18 +1,17 @@
 package com.ahmadi.events;
 
-import com.ahmadi.states.SimulationState;
-import com.ahmadi.states.SimulatorState;
+import com.ahmadi.states.SimulatorEventType;
 import com.ahmadi.utils.eventbus.Event;
 
 public class EventSimulator extends Event {
 	
-	private final SimulatorState state;
+	private final SimulatorEventType state;
 	
-	public EventSimulator(SimulatorState state) {
+	public EventSimulator(SimulatorEventType state) {
 		this.state = state;
 	}
 	
-	public SimulatorState getState() {
+	public SimulatorEventType getState() {
 		return state;
 	}
 }

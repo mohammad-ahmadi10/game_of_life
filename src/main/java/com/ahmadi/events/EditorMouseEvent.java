@@ -1,20 +1,20 @@
 package com.ahmadi.events;
 
-import com.ahmadi.states.EditorMouseState;
+import com.ahmadi.states.EditorMouseEventType;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.eventbus.Event;
 
 public class EditorMouseEvent extends Event {
 	
 	private final CursorPosition cursorPosition;
-	private final EditorMouseState state;
+	private final EditorMouseEventType state;
 	
-	public EditorMouseEvent(CursorPosition cursorPosition, EditorMouseState state) {
+	public EditorMouseEvent(CursorPosition cursorPosition, EditorMouseEventType state) {
 		this.cursorPosition = cursorPosition;
 		this.state = state;
 	}
 	
-	public EditorMouseState getState() {
+	public EditorMouseEventType getState() {
 		return state;
 	}
 	

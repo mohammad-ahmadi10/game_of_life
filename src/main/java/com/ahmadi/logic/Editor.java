@@ -5,39 +5,38 @@ import com.ahmadi.command.CommandExecutor;
 import com.ahmadi.command.EditorBoardCommand;
 import com.ahmadi.command.EditorCommand;
 import com.ahmadi.events.CellStateEvent;
-import com.ahmadi.events.EditorMouseEvent;
-import com.ahmadi.states.EditorMouseState;
-import com.ahmadi.states.EditorState;
+import com.ahmadi.states.EditorMouseEventType;
+import com.ahmadi.states.EditorComponentState;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.eventbus.Event;
 
 public class Editor {
 	
-	private final EditorState editorState;
+	private final EditorComponentState editorComponentState;
 	private final CommandExecutor executor;
 	
 	
-	public EditorState getEditorState() {
-		return editorState;
+	public EditorComponentState getEditorComponentState() {
+		return editorComponentState;
 	}
 	
 	// constructor
-	public Editor(EditorState editorState, CommandExecutor executor) {
+	public Editor(EditorComponentState editorComponentState, CommandExecutor executor) {
 		
-		this.editorState = editorState;
+		this.editorComponentState = editorComponentState;
 		this.executor = executor;
 	}
 	
 	
 	public void handleCursorEvent(Event event) {
-		EditorMouseEvent cursorEvent = (EditorMouseEvent) event;
+		com.ahmadi.events.EditorMouseEvent cursorEvent = (com.ahmadi.events.EditorMouseEvent) event;
 		var x = cursorEvent.getCursorPosition().getX();
 		var y = cursorEvent.getCursorPosition().getY();
-		EditorMouseState state = cursorEvent.getState();
+		EditorMouseEventType state = cursorEvent.getState();
 		switch (state){
 			case CLICK:
 			case DRAGGED:
-				EditorBoardCommand command = new EditorBoardCommand(new CursorPosition(x ,y) , editorState.getCellStateProperty().getValue());
+				EditorBoardCommand command = new EditorBoardCommand(new CursorPosition(x ,y) , editorComponentState.getCellStateProperty().getValue());
 				executor.execute(command);
 				break;
 			case EXIT:

@@ -3,8 +3,7 @@ package com.ahmadi.logic;
 import com.ahmadi.events.EventSimulator;
 import com.ahmadi.model.Simulation;
 import com.ahmadi.model.abstracts.Board;
-import com.ahmadi.states.SimulationState;
-import com.ahmadi.states.SimulatorState;
+import com.ahmadi.states.SimulatorEventType;
 import com.ahmadi.utils.Property;
 import com.ahmadi.utils.eventbus.Event;
 
@@ -12,7 +11,7 @@ public class Simulator {
 	
 	// properties
 	private final Property<Board> simBoardProperty;
-	private final Property<SimulatorState> simStateProperty;
+	private final Property<SimulatorEventType> simStateProperty;
 	private final Simulation simulation;
 	
 	
@@ -21,9 +20,10 @@ public class Simulator {
 	public Property<Board> getSimBoardProperty() {
 		return simBoardProperty;
 	}
-	public Property<SimulatorState> getSimStateProperty() {
+	public Property<SimulatorEventType> getSimStateProperty() {
 		return simStateProperty;
 	}
+	
 	// Constructor
 	public Simulator(Simulation simulation) {
 		this.simulation = simulation;

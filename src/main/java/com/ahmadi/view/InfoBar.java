@@ -3,7 +3,7 @@ package com.ahmadi.view;
 import com.ahmadi.states.ApplicationState;
 import com.ahmadi.states.CellState;
 import com.ahmadi.utils.CursorPosition;
-import com.ahmadi.viewModels.InfoBarViewModel;
+import com.ahmadi.states.InfoBarComponentState;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -16,14 +16,14 @@ public class InfoBar extends AnchorPane {
 	
 	
 	
-	public InfoBar(InfoBarViewModel infoBarViewModel) {
+	public InfoBar(InfoBarComponentState infoBarComponentState) {
 		String cursorPattern = String.format("Cursor Position: (%d, %d)" , 0 , 0);
 		String appStatePattern = String.format("App mode: %s" , ApplicationState.EDITING.toString().toLowerCase());
 		String drawStatePattern = "Draw mode: draw";
 		
-		infoBarViewModel.getCursorProperty().subscribe(this::setCursorPosToLbl);
-		infoBarViewModel.getCellProperty().subscribe(this::setDrawMode);
-		infoBarViewModel.getAppState().subscribe(this::setAppMode);
+		infoBarComponentState.getCursorProperty().subscribe(this::setCursorPosToLbl);
+		infoBarComponentState.getCellProperty().subscribe(this::setDrawMode);
+		infoBarComponentState.getAppState().subscribe(this::setAppMode);
 		
 		cursorLbl = new Label(cursorPattern);
 		modeLbl = new Label(appStatePattern);

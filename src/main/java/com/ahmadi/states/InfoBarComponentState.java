@@ -1,11 +1,11 @@
-package com.ahmadi.viewModels;
+package com.ahmadi.states;
 
 import com.ahmadi.states.ApplicationState;
 import com.ahmadi.states.CellState;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.Property;
 
-public class InfoBarViewModel {
+public class InfoBarComponentState {
 	private final Property<CursorPosition> cursorProperty = new Property<>();
 	private final Property<CellState> cellProperty = new Property<>();
 	private final Property<ApplicationState> appState = new Property<>();

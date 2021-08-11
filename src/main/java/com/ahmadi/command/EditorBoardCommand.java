@@ -1,7 +1,7 @@
 package com.ahmadi.command;
 
 import com.ahmadi.states.CellState;
-import com.ahmadi.states.EditorState;
+import com.ahmadi.states.EditorComponentState;
 import com.ahmadi.utils.CursorPosition;
 
 public class EditorBoardCommand implements EditorCommand{
@@ -16,7 +16,7 @@ public class EditorBoardCommand implements EditorCommand{
 	
 	
 	@Override
-	public void execute(EditorState state) {
+	public void execute(EditorComponentState state) {
 		state.getEditBoardProperty().getValue().setState(pos , cellState);
 	}
 }

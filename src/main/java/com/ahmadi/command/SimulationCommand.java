@@ -1,15 +1,15 @@
 package com.ahmadi.command;
 
 
-import com.ahmadi.states.SimulationState;
+import com.ahmadi.states.SimulationComponentState;
 
-public interface SimulationCommand extends Command<SimulationState>{
+public interface SimulationCommand extends Command<SimulationComponentState>{
 	@Override
-	void execute(SimulationState state);
+	void execute(SimulationComponentState state);
 	
 	
 	@Override
-	default Class<SimulationState> getStateClass() {
-		return SimulationState.class;
+	default Class<SimulationComponentState> getStateClass() {
+		return SimulationComponentState.class;
 	}
 }

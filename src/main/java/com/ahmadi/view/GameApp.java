@@ -1,6 +1,9 @@
 package com.ahmadi.view;
 
 import com.ahmadi.command.CommandExecutor;
+import com.ahmadi.drawLayer.CellStateDrawLayer;
+import com.ahmadi.drawLayer.CursorDrawLayer;
+import com.ahmadi.drawLayer.GridDrawLayer;
 import com.ahmadi.events.ApplicationEvent;
 import com.ahmadi.events.CellStateEvent;
 import com.ahmadi.events.EditorMouseEvent;
@@ -11,9 +14,7 @@ import com.ahmadi.model.StandardBoard;
 import com.ahmadi.model.StandardRules;
 import com.ahmadi.model.abstracts.Board;
 import com.ahmadi.model.interfaces.RuleSets;
-import com.ahmadi.states.EditorState;
-import com.ahmadi.states.RegistryState;
-import com.ahmadi.states.SimulationState;
+import com.ahmadi.states.*;
 import com.ahmadi.utils.SharedVariable;
 import com.ahmadi.utils.eventbus.Eventbus;
 import com.ahmadi.viewModels.*;
@@ -41,28 +42,33 @@ public class GameApp extends Application {
 		Board board = new StandardBoard(SharedVariable.BORD_WIDTH , SharedVariable.BORD_HEIGHT);
 		RuleSets standardRules = new StandardRules();
 		
-		EditorState editorState = new EditorState(board);
-		SimulationState simulationState = new SimulationState(board);
+		// states
+		EditorComponentState editorComponentState = new EditorComponentState(board);
+		SimulationComponentState simulationComponentState = new SimulationComponentState(board);
+		BoardComponentState boardComponentState = new BoardComponentState(board);
+		InfoBarComponentState infoBarComponentState = new InfoBarComponentState();
+		CanvasComponentState canvasComponentState = new CanvasComponentState();
 		
-		registryState.register(EditorState.class , editorState);
-		registryState.register(SimulationState.class , simulationState);
+		registryState.register(EditorComponentState.class , editorComponentState);
+		registryState.register(SimulationComponentState.class , simulationComponentState);
+		registryState.register(BoardComponentState.class , boardComponentState);
+		registryState.register(CanvasComponentState.class , canvasComponentState);
 		
 		
-		Simulation simulation = new Simulation(standardRules , eventbus , simulationState, executor);
+		Simulation simulation = new Simulation(standardRules , eventbus , simulationComponentState, executor);
 		
 		// logic
 		ApplicationStateManager applicationStateManager = new ApplicationStateManager();
-		Editor editor = new Editor(editorState , executor);
+		Editor editor = new Editor(editorComponentState, executor);
 		Simulator simulator = new Simulator(simulation);
 		
 		// viewModels
-		BoardViewModel boardViewModel = new BoardViewModel(editor, simulator);
-		InfoBarViewModel infoBarViewModel = new InfoBarViewModel();
+		BoardViewModel boardViewModel = new BoardViewModel(editor, simulator, boardComponentState);
 		
 		
 		// views
-		Canvas canvas = new Canvas(eventbus);
-		InfoBar infoBar =  new InfoBar(infoBarViewModel);
+		Canvas canvas = new Canvas(eventbus , canvasComponentState);
+		InfoBar infoBar =  new InfoBar(infoBarComponentState);
 		GridPane gridPane = new GridPane(canvas);
 		ToolBar toolbar  = new ToolBar(eventbus);
 		CanvasApp canvasApp = new CanvasApp(eventbus);
@@ -71,9 +77,17 @@ public class GameApp extends Application {
 		canvasApp.setCenter(gridPane);
 		canvasApp.setLeft(toolbar);
 		
+		// DrawLayers
+		CellStateDrawLayer cellStateDrawLayer = new CellStateDrawLayer(boardComponentState);
+		GridDrawLayer gridDrawLayer = new GridDrawLayer(boardComponentState);
+		CursorDrawLayer cursorDrawLayer = new CursorDrawLayer(canvasComponentState);
+		gridPane.addDrawLayer(cellStateDrawLayer);
+		gridPane.addDrawLayer(gridDrawLayer);
+		gridPane.addDrawLayer(cursorDrawLayer);
+		
 		
 		// setting init values
-		simulator.getSimBoardProperty().setValue(editorState.getEditBoardProperty().getValue());
+		simulator.getSimBoardProperty().setValue(editorComponentState.getEditBoardProperty().getValue());
 		
 		
 		// events fire
@@ -82,29 +96,36 @@ public class GameApp extends Application {
 		eventbus.subscribeTo(EditorMouseEvent.class , editor::handleCursorEvent);
 		eventbus.subscribeTo(CellStateEvent.class , editor::handleNewCellState);
 		eventbus.subscribeTo(CellStateEvent.class , toolbar::handleNewCellState);
-		
+		eventbus.subscribeTo(CellStateEvent.class , canvasComponentState::handleNewCellState);
 		
 		// subscriptions infoBar
-		applicationStateManager.getAppStateProperty().subscribe(infoBarViewModel.getAppState()::setValue);
-		editorState.getCellStateProperty().subscribe(infoBarViewModel.getCellProperty()::setValue);
-		editorState.getCursorProperty().subscribe(infoBarViewModel.getCursorProperty()::setValue);
+		applicationStateManager.getAppStateProperty().subscribe(infoBarComponentState.getAppState()::setValue);
+		editorComponentState.getCellStateProperty().subscribe(infoBarComponentState.getCellProperty()::setValue);
+		editorComponentState.getCursorProperty().subscribe(infoBarComponentState.getCursorProperty()::setValue);
 		
 		
 		// subscriptions boardViewModel and Editor && simulation && simulator
-		editorState.getEditBoardProperty().subscribe(boardViewModel.getBoardProperty()::setValue);
-		simulator.getSimBoardProperty().subscribe(boardViewModel.getBoardProperty()::setValue);
-		simulator.getSimBoardProperty().subscribe(editorState.getEditBoardProperty()::setValue);
-		simulationState.getBoardPro().subscribe(simulator.getSimBoardProperty()::setValue);
+		editorComponentState.getEditBoardProperty().subscribe(boardViewModel.getState().getBoardProperty()::setValue);
+		simulator.getSimBoardProperty().subscribe(boardViewModel.getState().getBoardProperty()::setValue);
+		simulator.getSimBoardProperty().subscribe(editorComponentState.getEditBoardProperty()::setValue);
+		simulationComponentState.getBoardPro().subscribe(simulator.getSimBoardProperty()::setValue);
 		simulator.getSimStateProperty().subscribe(simulation::handleNewSimState);
 		
 		
 		
 		// subscriptions gridPane && boardViewModel
-		boardViewModel.getBoardProperty().subscribe(gridPane::handleNewBoard);
-		boardViewModel.getBoardProperty().setValue(board);
-		applicationStateManager.getAppStateProperty().subscribe(gridPane::handleAppStateChange);
-		editorState.getCellStateProperty().subscribe(gridPane::handleNewCellState);
+		boardViewModel.getState().getBoardProperty().subscribe(gridPane::handleNewBoard);
+		boardViewModel.getState().getBoardProperty().setValue(board);
+		
+		applicationStateManager.getAppStateProperty().subscribe(state ->{
+			canvasComponentState.getIsEditing().setValue(state == ApplicationState.EDITING);
+		});
+		
+		
+		
 		simulator.getSimStateProperty().subscribe(boardViewModel::handleSimState);
+		
+		
 		
 		
 		
