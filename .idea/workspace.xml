@@ -19,36 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80cef0c9-aa97-49e4-b106-1dd901b43135" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/drawLayer/CellStateDrawLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/drawLayer/CursorDrawLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/drawLayer/DrawLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/drawLayer/GridDrawLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/drawLayer/InvalidationListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/BoardComponentState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/CanvasComponentState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/CellStateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/CellStateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/EditorBoardCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/EditorBoardCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/EditorCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/EditorCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/SimulationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/command/SimulationCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/events/EditorMouseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/events/EditorMouseEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/events/EventSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/events/EventSimulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/logic/Editor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/logic/Editor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/logic/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/logic/Simulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/model/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/model/Simulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/EditorMouseState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/EditorMouseEventType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/EditorState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/EditorComponentState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/SimulationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/SimulationComponentState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/SimulatorState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/SimulatorEventType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/Canvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/GameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/GameApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/GridPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/GridPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/InfoBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/InfoBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/ToolBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/view/ToolBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/viewModels/BoardViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/viewModels/BoardViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ahmadi/viewModels/InfoBarViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ahmadi/states/InfoBarComponentState.java" afterDir="false" />
-    </list>
+    <list default="true" id="80cef0c9-aa97-49e4-b106-1dd901b43135" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -140,7 +111,7 @@
       <option name="presentableId" value="Default" />
       <updated>1628621261071</updated>
       <workItem from="1628621262358" duration="3736000" />
-      <workItem from="1628662572820" duration="4682000" />
+      <workItem from="1628662572820" duration="5028000" />
     </task>
     <task id="LOCAL-00001" summary="#3 implementing command and executor">
       <created>1628624392356</created>
@@ -149,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628624392356</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="#4 implementing DrawLayer concept">
+      <created>1628667765331</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1628667765331</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,7 +147,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="#3 implementing command and executor" />
-    <option name="LAST_COMMIT_MESSAGE" value="#3 implementing command and executor" />
+    <MESSAGE value="#4 implementing DrawLayer concept" />
+    <option name="LAST_COMMIT_MESSAGE" value="#4 implementing DrawLayer concept" />
   </component>
   <component name="WindowStateProjectService">
     <state x="859" y="56" key="#com.intellij.ide.util.MemberChooser" timestamp="1628666810411">
@@ -184,22 +163,22 @@
       <screen x="0" y="0" width="2293" height="960" />
     </state>
     <state x="710" y="94" key="FileChooserDialogImpl/0.0.2293.960@0.0.2293.960" timestamp="1628621788541" />
-    <state width="2225" height="427" key="GridCell.Tab.0.bottom" timestamp="1628667146501">
+    <state width="2225" height="77" key="GridCell.Tab.0.bottom" timestamp="1628667768872">
       <screen x="0" y="0" width="2293" height="960" />
     </state>
-    <state width="2225" height="427" key="GridCell.Tab.0.bottom/0.0.2293.960@0.0.2293.960" timestamp="1628667146501" />
-    <state width="2225" height="427" key="GridCell.Tab.0.center" timestamp="1628667146501">
+    <state width="2225" height="77" key="GridCell.Tab.0.bottom/0.0.2293.960@0.0.2293.960" timestamp="1628667768872" />
+    <state width="2225" height="77" key="GridCell.Tab.0.center" timestamp="1628667768872">
       <screen x="0" y="0" width="2293" height="960" />
     </state>
-    <state width="2225" height="427" key="GridCell.Tab.0.center/0.0.2293.960@0.0.2293.960" timestamp="1628667146501" />
-    <state width="2225" height="427" key="GridCell.Tab.0.left" timestamp="1628667146500">
+    <state width="2225" height="77" key="GridCell.Tab.0.center/0.0.2293.960@0.0.2293.960" timestamp="1628667768872" />
+    <state width="2225" height="77" key="GridCell.Tab.0.left" timestamp="1628667768872">
       <screen x="0" y="0" width="2293" height="960" />
     </state>
-    <state width="2225" height="427" key="GridCell.Tab.0.left/0.0.2293.960@0.0.2293.960" timestamp="1628667146500" />
-    <state width="2225" height="427" key="GridCell.Tab.0.right" timestamp="1628667146501">
+    <state width="2225" height="77" key="GridCell.Tab.0.left/0.0.2293.960@0.0.2293.960" timestamp="1628667768872" />
+    <state width="2225" height="77" key="GridCell.Tab.0.right" timestamp="1628667768872">
       <screen x="0" y="0" width="2293" height="960" />
     </state>
-    <state width="2225" height="427" key="GridCell.Tab.0.right/0.0.2293.960@0.0.2293.960" timestamp="1628667146501" />
+    <state width="2225" height="77" key="GridCell.Tab.0.right/0.0.2293.960@0.0.2293.960" timestamp="1628667768872" />
     <state x="372" y="0" key="SettingsEditor" timestamp="1628621791541">
       <screen x="0" y="0" width="2293" height="960" />
     </state>
