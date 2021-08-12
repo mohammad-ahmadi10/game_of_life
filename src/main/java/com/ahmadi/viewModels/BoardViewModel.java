@@ -1,43 +1,42 @@
 package com.ahmadi.viewModels;
 
-import com.ahmadi.logic.Editor;
-import com.ahmadi.logic.Simulator;
-import com.ahmadi.states.BoardComponentState;
-import com.ahmadi.states.SimulatorEventType;
+import com.ahmadi.states.*;
 
 
 public class BoardViewModel {
 	
 	private final BoardComponentState state;
-	private final Editor editor;
-	private final Simulator simulator;
+	private final SimulationComponentState simulationComponentState;
+	private final EditorComponentState editorComponentState;
+	private final SimulatorComponentState simulatorComponentState;
 	
-	public BoardViewModel(Editor editor, Simulator simulator , BoardComponentState state) {
-		this.editor = editor;
-		this.simulator = simulator;
+	public BoardViewModel(EditorComponentState editorComponentState, SimulatorComponentState simulatorComponentState, BoardComponentState state, SimulationComponentState simulationComponentState) {
+		this.editorComponentState = editorComponentState;
+		this.simulatorComponentState = simulatorComponentState;
 		this.state = state;
+		this.simulationComponentState = simulationComponentState;
 	}
 	
 	public BoardComponentState getState() {
 		return state;
 	}
 	
-	public void handleSimState(SimulatorEventType simulationState) {
+	public void handleSimState(SimulatorEventType type) {
 		
-		switch (simulationState){
+		switch (type){
 			case STOP:{
-				editor.getEditorComponentState().getEditBoardProperty().setValue(editor.getEditorComponentState().getEditBoardProperty().getValue());
-				editor.getEditorComponentState().getEditBoardProperty().getValue().resetCellState(editor.getEditorComponentState().getEditBoardProperty().getValue().getGrid());
-				simulator.getSimBoardProperty().setValue(editor.getEditorComponentState().getEditBoardProperty().getValue());
+				editorComponentState.getEditBoardProperty().setValue(editorComponentState.getEditBoardProperty().getValue());
+				editorComponentState.getEditBoardProperty().getValue().resetCellState(editorComponentState.getEditBoardProperty().getValue().getGrid());
+				simulatorComponentState.getSimBoardProperty().setValue(editorComponentState.getEditBoardProperty().getValue());
 			}
 			break;
 			
 			case STEP:
-				editor.getEditorComponentState().getEditBoardProperty().setValue(simulator.getSimBoardProperty().getValue());
-				simulator.getSimulation().setBoard(simulator.getSimBoardProperty().getValue());
+				editorComponentState.getEditBoardProperty().setValue(simulatorComponentState.getSimBoardProperty().getValue());
+				simulationComponentState.getBoardPro().setValue(simulatorComponentState.getSimBoardProperty().getValue());
 				break;
 			case START:
-				simulator.getSimulation().setBoard(simulator.getSimBoardProperty().getValue());
+				simulationComponentState.getBoardPro().setValue(simulatorComponentState.getSimBoardProperty().getValue());
 				break;
 		}
 		

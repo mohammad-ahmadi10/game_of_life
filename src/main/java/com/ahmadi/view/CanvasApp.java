@@ -1,6 +1,9 @@
 package com.ahmadi.view;
 
+import com.ahmadi.command.CommandExecutor;
+import com.ahmadi.events.EditorMouseEvent;
 import com.ahmadi.states.CellState;
+import com.ahmadi.utils.eventbus.Event;
 import com.ahmadi.utils.eventbus.Eventbus;
 import com.ahmadi.events.CellStateEvent;
 import javafx.scene.input.KeyCode;
@@ -11,8 +14,11 @@ import javafx.scene.layout.BorderPane;
 public class CanvasApp extends BorderPane {
 	
 	private final Eventbus eventbus;
-	public CanvasApp(Eventbus eventbus) {
+	private final CommandExecutor executor;
+	
+	public CanvasApp(Eventbus eventbus , CommandExecutor executor) {
 		this.eventbus = eventbus;
+		this.executor = executor;
 		this.setOnKeyPressed(this::handleKeyPressed);
 	}
 	
@@ -25,6 +31,12 @@ public class CanvasApp extends BorderPane {
 				eventbus.emitEvent(new CellStateEvent(CellState.DEAD));
 			}
 		}
+		else if(event.isControlDown())
+			if(event.getCode() == KeyCode.Z){
+				executor.undo();
+				
+			}
+		
 		
 		
 	}

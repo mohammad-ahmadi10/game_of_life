@@ -40,6 +40,6 @@ public class CursorDrawLayer extends DrawLayer{
 	
 	@Override
 	public int getLayerIndex() {
-		return 0;
+		return 9;
 	}
 }

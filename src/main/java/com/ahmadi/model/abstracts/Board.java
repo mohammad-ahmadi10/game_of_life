@@ -51,16 +51,9 @@ public abstract class Board {
 		return countAllSame == getWidth() * getHeight();
 	}
 	
-	public boolean isGridEmpty(){
-		int countDeadCell = 0;
-		for (int i = 0; i < width.getValue() - 1; i++) {
-			for (int j = 0; j < height.getValue() - 1; j++) {
-				if(grid[i][j] == CellState.DEAD)
-					countDeadCell++;
-			}
-		}
-		
-		return countDeadCell == (width.getValue() * height.getValue());
+	
+	public CellState getState(CursorPosition pos){
+		return this.grid[pos.getX()][pos.getY()];
 	}
 	
 	
@@ -82,8 +75,6 @@ public abstract class Board {
 	}
 	
 	public static void  copyBoard(Board mainBoard , Board prevBoard) {
-		
-
 		for (int i = 0; i < mainBoard.width.getValue() - 1; i++) {
 			System.arraycopy(mainBoard.grid[i], 0, prevBoard.grid[i], 0, mainBoard.height.getValue() - 1);
 		}

@@ -1,6 +1,6 @@
 package com.ahmadi.states;
 
-public enum ApplicationState {
+public enum ApplicationStateType {
 	EDITING, SIMULATING
 }
 

@@ -1,6 +1,6 @@
 package com.ahmadi.view;
 
-import com.ahmadi.states.ApplicationState;
+import com.ahmadi.states.ApplicationStateType;
 import com.ahmadi.states.CellState;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.states.InfoBarComponentState;
@@ -18,7 +18,7 @@ public class InfoBar extends AnchorPane {
 	
 	public InfoBar(InfoBarComponentState infoBarComponentState) {
 		String cursorPattern = String.format("Cursor Position: (%d, %d)" , 0 , 0);
-		String appStatePattern = String.format("App mode: %s" , ApplicationState.EDITING.toString().toLowerCase());
+		String appStatePattern = String.format("App mode: %s" , ApplicationStateType.EDITING.toString().toLowerCase());
 		String drawStatePattern = "Draw mode: draw";
 		
 		infoBarComponentState.getCursorProperty().subscribe(this::setCursorPosToLbl);
@@ -53,7 +53,7 @@ public class InfoBar extends AnchorPane {
 		cursorLbl.setText(formattedString);
 	}
 	
-	public void setAppMode(ApplicationState state){
+	public void setAppMode(ApplicationStateType state){
 		String formattedString = String.format("App mode: %s" , state.toString().toLowerCase());
 		modeLbl.setText(formattedString);
 	}

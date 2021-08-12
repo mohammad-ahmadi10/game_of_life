@@ -14,6 +14,9 @@ public class EditorMouseEvent extends Event {
 		this.state = state;
 	}
 	
+	
+	
+	
 	public EditorMouseEventType getState() {
 		return state;
 	}

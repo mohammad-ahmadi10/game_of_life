@@ -1,14 +1,12 @@
 package com.ahmadi.states;
 
-import com.ahmadi.states.ApplicationState;
-import com.ahmadi.states.CellState;
 import com.ahmadi.utils.CursorPosition;
 import com.ahmadi.utils.Property;
 
-public class InfoBarComponentState {
+public class InfoBarComponentState implements State{
 	private final Property<CursorPosition> cursorProperty = new Property<>();
 	private final Property<CellState> cellProperty = new Property<>();
-	private final Property<ApplicationState> appState = new Property<>();
+	private final Property<ApplicationStateType> appState = new Property<>();
 	
 	public Property<CursorPosition> getCursorProperty() {
 		return cursorProperty;
@@ -18,7 +16,7 @@ public class InfoBarComponentState {
 		return cellProperty;
 	}
 	
-	public Property<ApplicationState> getAppState() {
+	public Property<ApplicationStateType> getAppState() {
 		return appState;
 	}
 }

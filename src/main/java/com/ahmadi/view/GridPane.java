@@ -2,7 +2,6 @@ package com.ahmadi.view;
 
 import com.ahmadi.drawLayer.DrawLayer;
 import com.ahmadi.model.abstracts.Board;
-import com.ahmadi.states.ApplicationState;
 import com.ahmadi.states.CellState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
@@ -14,7 +13,6 @@ import java.util.List;
 
 public class GridPane extends Pane {
 	private final Canvas canvas;
-	private boolean isAlive = true;
 	private final List<DrawLayer> drawLayerList;
 	public GridPane(Canvas canvas) {
 		this.canvas = canvas;
@@ -47,9 +45,4 @@ public class GridPane extends Pane {
 		drawLayerList.forEach(drawLayer -> drawLayer.draw(gc));
 		
 	}
-	
-	public void handleNewCellState(CellState cellState) {
-		isAlive = cellState.equals(CellState.ALIVE);
-	}
-	
 }

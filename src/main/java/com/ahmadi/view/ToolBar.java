@@ -1,12 +1,12 @@
 package com.ahmadi.view;
 
-import com.ahmadi.components.ToggleButton;
-import com.ahmadi.states.CellState;
-import com.ahmadi.states.SimulatorEventType;
-import com.ahmadi.utils.eventbus.Event;
-import com.ahmadi.utils.eventbus.Eventbus;
 import com.ahmadi.events.CellStateEvent;
 import com.ahmadi.events.EventSimulator;
+import com.ahmadi.states.CellState;
+import com.ahmadi.states.SimulatorEventType;
+import com.ahmadi.states.ToolBarComponentState;
+import com.ahmadi.utils.ToggleButton;
+import com.ahmadi.utils.eventbus.Eventbus;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -36,8 +36,10 @@ public class ToolBar extends VBox {
 	private boolean isSimulating;
 
 	
-	public ToolBar(Eventbus eventbus) {
+	public ToolBar(Eventbus eventbus , ToolBarComponentState state) {
 		this.eventbus = eventbus;
+		
+		state.getCellState().subscribe(this::handleNewCellState);
 		
 		Button nextStep = new Button();
 		nextStep.setGraphic(new ImageView(new Image("com/ahmadi/next.png")));
@@ -135,8 +137,7 @@ public class ToolBar extends VBox {
 	}
 	
 	
-	public void handleNewCellState(Event event) {
-		CellStateEvent cellState = (CellStateEvent) event;
-		getSwitchToggle().switchOnProperty().set(cellState.getCellState().equals(CellState.ALIVE));
+	public void handleNewCellState(CellState state) {
+		getSwitchToggle().switchOnProperty().set(state.equals(CellState.ALIVE));
 	}
 }

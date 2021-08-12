@@ -6,7 +6,7 @@ import com.ahmadi.events.ApplicationEvent;
 import com.ahmadi.events.EventSimulator;
 import com.ahmadi.model.abstracts.Board;
 import com.ahmadi.model.interfaces.RuleSets;
-import com.ahmadi.states.ApplicationState;
+import com.ahmadi.states.ApplicationStateType;
 import com.ahmadi.states.CellState;
 import com.ahmadi.states.SimulationComponentState;
 import com.ahmadi.states.SimulatorEventType;
@@ -22,19 +22,20 @@ public class Simulation {
 	private final Timeline timeline_forward = new Timeline();
 	private Board simBoard;
 	private final Eventbus eventbus;
-	private SimulationComponentState state;
-	private CommandExecutor executor;
+	private final SimulationComponentState state;
+	private final CommandExecutor executor;
 	private final RuleSets rules;
 	
 	
 	
 	
 	
-	public Simulation(RuleSets rules, Eventbus eventbus , SimulationComponentState state , CommandExecutor executor) {
-		this.rules = rules;
+	public Simulation(Eventbus eventbus , SimulationComponentState state , CommandExecutor executor) {
+		this.rules = new StandardRules();
 		this.eventbus = eventbus;
 		this.state = state;
 		this.executor = executor;
+		state.getBoardPro().subscribe(this::setBoard);
 		
 		KeyFrame keyFrame_forward = new KeyFrame(Duration.millis(50), event -> handleNextstep());
 		timeline_forward.getKeyFrames().add(keyFrame_forward);
@@ -42,25 +43,26 @@ public class Simulation {
 	}
 	
 	
+	
 	public void handleNewSimState(SimulatorEventType state) {
 		switch (state){
 			case START:
-				eventbus.emitEvent(new ApplicationEvent(ApplicationState.SIMULATING));
+				eventbus.emitEvent(new ApplicationEvent(ApplicationStateType.SIMULATING));
 				timeline_forward.play();
 				break;
 			case PAUSE:
 				timeline_forward.pause();
-				eventbus.emitEvent(new ApplicationEvent(ApplicationState.EDITING));
+				eventbus.emitEvent(new ApplicationEvent(ApplicationStateType.EDITING));
 				break;
 			case STOP:
-				eventbus.emitEvent(new ApplicationEvent(ApplicationState.EDITING));
+				eventbus.emitEvent(new ApplicationEvent(ApplicationStateType.EDITING));
 				timeline_forward.stop();
 				break;
 			case STEP:
 				timeline_forward.stop();
-				eventbus.emitEvent(new ApplicationEvent(ApplicationState.SIMULATING));
+				eventbus.emitEvent(new ApplicationEvent(ApplicationStateType.SIMULATING));
 				handleNextstep();
-				eventbus.emitEvent(new ApplicationEvent(ApplicationState.EDITING));
+				eventbus.emitEvent(new ApplicationEvent(ApplicationStateType.EDITING));
 				break;
 		}
 		
@@ -77,9 +79,7 @@ public class Simulation {
 		
 		if(this.getBoard() != null)
 		{
-			SimulationCommand command = state ->{
-				state.getBoardPro().setValue(this.simBoard);
-			};
+			SimulationCommand command = state -> state.getBoardPro().setValue(this.simBoard);
 			executor.execute(command);
 		}
 	}
@@ -106,12 +106,6 @@ public class Simulation {
 	
 	public void setBoard(Board board) {
 		this.simBoard = board;
-		
-		SimulationCommand command = state -> {
-			state.getBoardPro().setValue(this.simBoard);
-		};
-		executor.execute(command);
-		
 	}
 	
 }

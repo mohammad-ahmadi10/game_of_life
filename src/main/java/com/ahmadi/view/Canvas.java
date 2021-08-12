@@ -24,12 +24,17 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 				Math.round((float) SharedVariable.CANVAS_HEIGHT / SharedVariable.BORD_HEIGHT));
 		
 		setOnMouseClicked(this::handleMouseClick);
+		setOnMousePressed(this::handleMousePressed);
 		setOnMouseMoved(this::handleMouseMoved);
 		setOnMouseDragged(this::handleDragged);
+		setOnMouseReleased(this::handleReleased);
 		setOnMouseExited(this::handleMouseExit);
 		setOnMouseEntered(this::handleMouseEntered);
 		
 	}
+	
+	
+	
 	
 	public Affine getAffine() {
 		return affTrans;
@@ -38,6 +43,22 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 	
 	
 	// Events
+	private void handleMousePressed(MouseEvent event) {
+		System.out.println("pressed");
+	}
+	
+	public void handleDragged(MouseEvent event) {
+		System.out.println("dragging");
+		
+		CursorPosition pos = handleMouseEvent(event);
+		state.getCursorPositionProperty().setValue(pos);
+		eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(pos, EditorMouseEventType.DRAGGED));
+	}
+	private void handleReleased(MouseEvent event) {
+		System.out.println("released");
+	}
+	
+	
 	public void handleMouseEntered(MouseEvent event) {
 		state.getIsMouseOutOfCanvas().setValue(false);
 	}
@@ -47,11 +68,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 		eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(new CursorPosition(0 , 0), EditorMouseEventType.EXIT));
 	}
 	
-	public void handleDragged(MouseEvent event) {
-		CursorPosition pos = handleMouseEvent(event);
-		state.getCursorPositionProperty().setValue(pos);
-		eventbus.emitEvent(new com.ahmadi.events.EditorMouseEvent(pos, EditorMouseEventType.DRAGGED));
-	}
+	
 	
 	
 	private CursorPosition handleMouseEvent(MouseEvent event){
@@ -88,6 +105,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 	
 	// Handle click on StandardBoard to set state to 1
 	public void handleMouseClick(MouseEvent event) {
+		
 		int x = (int) (Math.ceil(event.getX()/ SharedVariable.RESOLUTION)) -1 ;
 		int y = (int) (Math.ceil(event.getY()/ SharedVariable.RESOLUTION)) -1 ;
 		

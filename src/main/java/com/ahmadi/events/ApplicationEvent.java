@@ -1,17 +1,17 @@
 package com.ahmadi.events;
 
-import com.ahmadi.states.ApplicationState;
+import com.ahmadi.states.ApplicationStateType;
 import com.ahmadi.utils.eventbus.Event;
 
 public class ApplicationEvent extends Event {
 	
-	ApplicationState state;
+	ApplicationStateType state;
 	
-	public ApplicationEvent(ApplicationState state) {
+	public ApplicationEvent(ApplicationStateType state) {
 		this.state = state;
 	}
 	
-	public ApplicationState getState() {
+	public ApplicationStateType getState() {
 		return state;
 	}
 }

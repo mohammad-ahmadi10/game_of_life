@@ -5,6 +5,7 @@ import com.ahmadi.command.CommandExecutor;
 import com.ahmadi.command.EditorBoardCommand;
 import com.ahmadi.command.EditorCommand;
 import com.ahmadi.events.CellStateEvent;
+import com.ahmadi.states.CellState;
 import com.ahmadi.states.EditorMouseEventType;
 import com.ahmadi.states.EditorComponentState;
 import com.ahmadi.utils.CursorPosition;
@@ -16,10 +17,6 @@ public class Editor {
 	private final CommandExecutor executor;
 	
 	
-	public EditorComponentState getEditorComponentState() {
-		return editorComponentState;
-	}
-	
 	// constructor
 	public Editor(EditorComponentState editorComponentState, CommandExecutor executor) {
 		
@@ -29,15 +26,24 @@ public class Editor {
 	
 	
 	public void handleCursorEvent(Event event) {
+		
 		com.ahmadi.events.EditorMouseEvent cursorEvent = (com.ahmadi.events.EditorMouseEvent) event;
+		
 		var x = cursorEvent.getCursorPosition().getX();
 		var y = cursorEvent.getCursorPosition().getY();
-		EditorMouseEventType state = cursorEvent.getState();
-		switch (state){
+		CursorPosition pos = new CursorPosition(x, y);
+		EditorMouseEventType eventType = cursorEvent.getState();
+		
+		switch (eventType){
 			case CLICK:
 			case DRAGGED:
-				EditorBoardCommand command = new EditorBoardCommand(new CursorPosition(x ,y) , editorComponentState.getCellStateProperty().getValue());
-				executor.execute(command);
+				CellState prevState = editorComponentState.getEditBoardProperty().getValue().getState(pos);
+				CellState currentState = editorComponentState.getCellStateProperty().getValue();
+				if(prevState != currentState){
+					EditorBoardCommand command = new EditorBoardCommand(pos ,currentState , prevState );
+					executor.execute(command);
+				}
+				
 				break;
 			case EXIT:
 				handleNewCursorPosition(0 , 0);
@@ -50,6 +56,7 @@ public class Editor {
 	}
 	
 	private void handleNewCursorPosition(int x, int y){
+		
 		EditorCommand command = state ->{
 			state.getCursorProperty().setValue(new CursorPosition(x, y));
 			state.getEditBoardProperty().setValue(state.getEditBoardProperty().getValue());

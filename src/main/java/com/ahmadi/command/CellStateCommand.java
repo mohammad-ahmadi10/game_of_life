@@ -12,7 +12,6 @@ public class CellStateCommand  implements EditorCommand{
 		this.cellState = cellState;
 	}
 	
-	
 	@Override
 	public void execute(EditorComponentState state) {
 		state.getCellStateProperty().setValue(cellState);
